@@ -28,7 +28,7 @@ public class TomeIntegrationTest {
 
     @AfterClass
     public static void tearDownClass() {
-        Library.open();
+        Library.close();
     }
 
     @Before
