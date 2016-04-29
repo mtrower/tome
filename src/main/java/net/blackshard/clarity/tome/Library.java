@@ -1,14 +1,12 @@
 package net.blackshard.clarity.tome;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-/*
-import org.hibernate.*;
-import org.hibernate.cfg.*;
-*/
 
 /**
  * @author Matthew R. Trower
@@ -17,16 +15,16 @@ import org.hibernate.cfg.*;
  * Provide a static wrapper to manage Hibernate lifecycle
  */
 public class Library {
+    private static final Logger log = LogManager.getLogger(Library.class);
     private static SessionFactory sessionFactory;
 
     public static boolean open() {
+        log.entry();
         // We only set up sessionFactory once!
         if (sessionFactory != null) {
-            System.out.println("Failed opening Library: already open");
+            log.warn("failed opening Library: already open");
             return true;
         }
-
-        System.out.println("opening Library");
 
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .loadProperties("hibernate.properties")
@@ -43,13 +41,12 @@ public class Library {
             // had trouble building the SessionFactory so destroy it manually.
             StandardServiceRegistryBuilder.destroy( registry );
 
-            e.printStackTrace();
-            System.out.println("Failed opening Library");
+            log.fatal("failed opening Library!");
+            log.fatal(e.getStackTrace());
 
             return false;
         }
 
-        System.out.println("Library open");
         return true;
     }
 
@@ -58,10 +55,9 @@ public class Library {
     }
 
     public static void close() {
-        System.out.println("closing library");
+        log.entry();
 
         if ( sessionFactory != null )
             sessionFactory.close();
-        System.out.println("library closed");
     }
 }
