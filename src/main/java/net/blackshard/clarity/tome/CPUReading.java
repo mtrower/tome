@@ -19,7 +19,9 @@ public class CPUReading implements Reading {
     @Column(name = "machine_id")
     private Integer machineId;
 
+    @Column(columnDefinition="timestamp with time zone")
     private Date timestamp;
+
     private Integer metricSystem;
     private Integer metricUser;
     private Integer metricIdle;
