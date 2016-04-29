@@ -20,9 +20,9 @@ public class CPUReading implements Reading {
     private Integer machineId;
 
     private Date timestamp;
-    private Integer metric_system;
-    private Integer metric_user;
-    private Integer metric_idle;
+    private Integer metricSystem;
+    private Integer metricUser;
+    private Integer metricIdle;
 
 
     public CPUReading() {}
@@ -32,23 +32,23 @@ public class CPUReading implements Reading {
         this.id = id;
         this.machineId = machineId;
         this.timestamp = timestamp;
-        this.metric_system = system;
-        this.metric_user = user;
-        this.metric_idle = idle;
+        this.metricSystem = system;
+        this.metricUser = user;
+        this.metricIdle = idle;
     }
     
 
     public Long getId() { return id; }
     public Integer getMachineId() { return machineId; }
     public Date getTimestamp() { return timestamp; }
-    public Integer getSystem() { return metric_system; }
-    public Integer getUser() { return metric_user; }
-    public Integer getIdle() { return metric_idle; }
+    public Integer getMetricSystem() { return metricSystem; }
+    public Integer getMetricUser() { return metricUser; }
+    public Integer getMetricIdle() { return metricIdle; }
 
     public void setId(Long value) { id = value; }
     public void setMachineId(Integer value) { machineId = value; }
     public void setTimestamp(Date value) { timestamp = value; }
-    public void setSystem(Integer value) { metric_system = value; }
-    public void setUser(Integer value) { metric_user = value; }
-    public void setIdle(Integer value) { metric_idle = value; }
+    public void setMetricSystem(Integer value) { metricSystem = value; }
+    public void setMetricUser(Integer value) { metricUser = value; }
+    public void setMetricIdle(Integer value) { metricIdle = value; }
 }
