@@ -1,6 +1,7 @@
 package net.blackshard.clarity.tome;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import javax.persistence.*;
 
 /**
@@ -53,4 +54,20 @@ public class CPUReading implements Reading {
     public void setMetricSystem(Integer value) { metricSystem = value; }
     public void setMetricUser(Integer value) { metricUser = value; }
     public void setMetricIdle(Integer value) { metricIdle = value; }
+
+    public LinkedHashMap getMetrics() {
+        LinkedHashMap<String, Integer> metrics = new LinkedHashMap();
+        metrics.put("user", metricUser);
+        metrics.put("system", metricSystem);
+        metrics.put("idle", metricIdle);
+
+        return metrics;
+    }
+
+    public String toString() {                                                                                                                                              
+        return    String.format("%s: %d, ", "id", id)
+                + String.format("%s: %d, ", "machineId", machineId)
+                + String.format("%s: %s, ", "timestamp", timestamp)
+                + String.format("%s: %s ", "metrics", getMetrics());
+    }
 }

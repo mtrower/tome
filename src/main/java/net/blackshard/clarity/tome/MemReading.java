@@ -1,6 +1,7 @@
 package net.blackshard.clarity.tome;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import javax.persistence.*;
 
 /**
@@ -49,4 +50,19 @@ public class MemReading implements Reading {
     public void setTimestamp(Date value) { timestamp = value; }
     public void setMetricSwap(Integer value) { metricSwap = value; }
     public void setMetricFree(Integer value) { metricFree = value; }
+
+    public LinkedHashMap getMetrics() {
+        LinkedHashMap<String, Integer> metrics = new LinkedHashMap();
+        metrics.put("swap", metricSwap);
+        metrics.put("free", metricFree);
+
+        return metrics;
+    }
+
+    public String toString() {                                                                                                                                              
+        return    String.format("%s: %d, ", "id", id)
+                + String.format("%s: %d, ", "machineId", machineId)
+                + String.format("%s: %s, ", "timestamp", timestamp)
+                + String.format("%s: %s ", "metrics", getMetrics());
+    }
 }

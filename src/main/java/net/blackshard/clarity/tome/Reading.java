@@ -16,4 +16,6 @@ public interface Reading {
     public void setId(Long value);
     public void setMachineId(Integer value);
     public void setTimestamp(Date value);
+
+    public String toString();
 }
