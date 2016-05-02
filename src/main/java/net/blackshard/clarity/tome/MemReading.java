@@ -2,7 +2,8 @@ package net.blackshard.clarity.tome;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * @author Matthew R. Trower
@@ -12,17 +13,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "plugin_cpu")
-public class MemReading implements Reading {
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "machine_id")
-    private Integer machineId;
-
-    @Column(columnDefinition="timestamp with time zone")
-    private Date timestamp;
-
+public class MemReading extends Reading {
     private Integer metricSwap;
     private Integer metricFree;
 
@@ -31,23 +22,16 @@ public class MemReading implements Reading {
 
     public MemReading(Integer machineId, Date timestamp,
             Integer swap, Integer free) {
-        this.id = id;
-        this.machineId = machineId;
-        this.timestamp = timestamp;
+        super(machineId, timestamp);
+
         this.metricSwap = swap;
         this.metricFree = free;
     }
     
 
-    public Long getId() { return id; }
-    public Integer getMachineId() { return machineId; }
-    public Date getTimestamp() { return timestamp; }
     public Integer getMetricSwap() { return metricSwap; }
     public Integer getMetricFree() { return metricFree; }
 
-    public void setId(Long value) { id = value; }
-    public void setMachineId(Integer value) { machineId = value; }
-    public void setTimestamp(Date value) { timestamp = value; }
     public void setMetricSwap(Integer value) { metricSwap = value; }
     public void setMetricFree(Integer value) { metricFree = value; }
 
@@ -57,12 +41,5 @@ public class MemReading implements Reading {
         metrics.put("free", metricFree);
 
         return metrics;
-    }
-
-    public String toString() {                                                                                                                                              
-        return    String.format("%s: %d, ", "id", id)
-                + String.format("%s: %d, ", "machineId", machineId)
-                + String.format("%s: %s, ", "timestamp", timestamp)
-                + String.format("%s: %s ", "metrics", getMetrics());
     }
 }
