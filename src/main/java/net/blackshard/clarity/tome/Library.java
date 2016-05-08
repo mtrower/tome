@@ -34,6 +34,7 @@ public class Library {
             sessionFactory = new MetadataSources( registry )
                 .addPackage("net.blackshard.clarity.tome")
                 .addAnnotatedClass(CPUReading.class)
+                .addAnnotatedClass(MemReading.class)
                 .buildMetadata()
                 .buildSessionFactory();
         } catch (Exception e) {

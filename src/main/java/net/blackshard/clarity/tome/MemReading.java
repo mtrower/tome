@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * DTO for Mem Scribblet Readings
  */
 @Entity
-@Table(name = "plugin_cpu")
+@Table(name = "plugin_mem")
 public class MemReading extends Reading {
     private Integer metricSwap;
     private Integer metricFree;
