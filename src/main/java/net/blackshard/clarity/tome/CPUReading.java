@@ -39,7 +39,13 @@ public class CPUReading extends Reading {
     public void setMetricSystem(Integer value) { metricSystem = value; }
     public void setMetricIdle(Integer value) { metricIdle = value; }
 
-    public LinkedHashMap getMetrics() {
+    public void setMetrics(LinkedHashMap<String, Integer> metrics) {
+        if (metrics.containsKey("user")) metricUser = metrics.get("user");
+        if (metrics.containsKey("system")) metricSystem = metrics.get("system");
+        if (metrics.containsKey("idle")) metricIdle = metrics.get("idle");
+    }
+
+    public LinkedHashMap<String, Integer> getMetrics() {
         LinkedHashMap<String, Integer> metrics = new LinkedHashMap();
         metrics.put("user", metricUser);
         metrics.put("system", metricSystem);

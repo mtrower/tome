@@ -23,9 +23,16 @@ public abstract class Reading {
     protected Date timestamp;
 
     public Reading() {}
+
     public Reading(Integer machineId, Date timestamp) {
-        this.machineId = machineId;
-        this.timestamp = timestamp;
+        setMachineId(machineId);
+        setTimestamp(timestamp);
+    }
+
+    public Reading(Integer machineId, Date timestamp, LinkedHashMap metrics) {
+        setMachineId(machineId);
+        setTimestamp(timestamp);
+        setMetrics(metrics);
     }
 
     public Long getId() { return id; }
@@ -35,9 +42,10 @@ public abstract class Reading {
     public void setMachineId(Integer value) { machineId = value; }
     public void setTimestamp(Date value) { timestamp = value; }
 
-    public abstract LinkedHashMap getMetrics();
+    public abstract void setMetrics(LinkedHashMap<String, Integer> metrics);
+    public abstract LinkedHashMap<String, Integer> getMetrics();
 
-    public String toString() {                                                                                                                                              
+    public String toString() {
         return    String.format("%s: %d, ", "id", id)
                 + String.format("%s: %d, ", "machineId", machineId)
                 + String.format("%s: %s, ", "timestamp", timestamp)

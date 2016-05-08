@@ -35,7 +35,12 @@ public class MemReading extends Reading {
     public void setMetricSwap(Integer value) { metricSwap = value; }
     public void setMetricFree(Integer value) { metricFree = value; }
 
-    public LinkedHashMap getMetrics() {
+    public void setMetrics(LinkedHashMap<String, Integer> metrics) {
+        if (metrics.containsKey("swap")) metricSwap = metrics.get("swap");
+        if (metrics.containsKey("free")) metricFree = metrics.get("free");
+    }
+
+    public LinkedHashMap<String, Integer> getMetrics() {
         LinkedHashMap<String, Integer> metrics = new LinkedHashMap();
         metrics.put("swap", metricSwap);
         metrics.put("free", metricFree);
