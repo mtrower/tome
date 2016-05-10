@@ -29,6 +29,11 @@ public class CPUReading extends Reading {
         this.metricSystem = system;
         this.metricIdle = idle;
     }
+
+    public CPUReading(Integer machineId, Date timestamp,
+            LinkedHashMap<String, Integer> metrics) {
+        super(machineId, timestamp, metrics);
+    }
     
 
     public Integer getMetricUser() { return metricUser; }
