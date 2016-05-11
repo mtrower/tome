@@ -4,9 +4,9 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 
 /**
  * @author Matthew R. Trower
@@ -25,21 +25,20 @@ public class Library {
             return true;
         }
 
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+        ServiceRegistry registry = new ServiceRegistryBuilder()
             .loadProperties("hibernate.properties")
-            .build();
+            .buildServiceRegistry();
 
         try {
-            sessionFactory = new MetadataSources( registry )
+            sessionFactory = new Configuration()
                 .addPackage("net.blackshard.clarity.tome")
                 .addAnnotatedClass(CPUReading.class)
                 .addAnnotatedClass(MemReading.class)
-                .buildMetadata()
-                .buildSessionFactory();
+                .buildSessionFactory(registry);
         } catch (Exception e) {
             // The registry would be destroyed by the SessionFactory, but we
             // had trouble building the SessionFactory so destroy it manually.
-            StandardServiceRegistryBuilder.destroy( registry );
+            ServiceRegistryBuilder.destroy( registry );
 
             log.fatal("failed opening Library!");
             log.fatal(e.getStackTrace());
