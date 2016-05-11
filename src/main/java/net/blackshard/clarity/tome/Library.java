@@ -19,7 +19,6 @@ public class Library {
     private static SessionFactory sessionFactory;
 
     public static boolean open() {
-        log.entry();
         // We only set up sessionFactory once!
         if (sessionFactory != null) {
             log.warn("failed opening Library: already open");
