@@ -54,8 +54,6 @@ public class Library {
     }
 
     public static void close() {
-        log.entry();
-
         if ( sessionFactory != null )
             sessionFactory.close();
     }

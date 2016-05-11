@@ -36,14 +36,14 @@ public class ReadingDAOHibernate<T extends Reading> implements ReadingDAO<T> {
         return id;
     }
 
-    public T get(Class<T> templateClass, Long id) {
+    public T get(Class<T> clazz, Long id) {
         Session book = Library.getBook();
         Transaction page = null;
         T reading = null;
 
         try {
             page = book.beginTransaction();
-            reading = (T)book.get(templateClass, id);
+            reading = (T)book.get(clazz, id);
             page.commit();
         } catch (HibernateException he) {
             if (page != null)
@@ -57,15 +57,17 @@ public class ReadingDAOHibernate<T extends Reading> implements ReadingDAO<T> {
         return reading;
     }
 
-    public List<T> getAll() {
+    public List<T> getAll(Class<T> clazz) {
         Session book = Library.getBook();
         Transaction page = null;
         List res = null;
 
         try {
-            String tableName = Entity.class.getAnnotation(Table.class).name();
+            String tableName = clazz.getName();
             page = book.beginTransaction();
-            res = book.createQuery("FROM " + tableName).list();
+            res = book
+                .createQuery("FROM " + tableName)
+                .list();
             page.commit();
         } catch (HibernateException he) {
             if (page != null)
@@ -80,7 +82,31 @@ public class ReadingDAOHibernate<T extends Reading> implements ReadingDAO<T> {
     }
 
     //public List<T> getRange(Long start, Long end) {return null;}
-    //public List<T> getLatest(Long count) {return null;}
+    public List<T> getLatest(Class<T> clazz, int count) {
+        Session book = Library.getBook();
+        Transaction page = null;
+        List res = null;
+
+        try {
+            String tableName = clazz.getName();
+            page = book.beginTransaction();
+            res = book
+                .createQuery("FROM " + tableName + " ORDER BY timestamp DESC")
+                .setMaxResults(count)
+                .list();
+            page.commit();
+        } catch (HibernateException he) {
+            if (page != null)
+                page.rollback();
+
+            he.printStackTrace();
+        } finally {
+            book.close();
+        }
+
+        return res;
+    }
+
     public boolean delete(Class<T> templateClass, Long id) {
         Session book = Library.getBook();
         Transaction page = null;

@@ -10,9 +10,9 @@ import java.util.List;
  */
 public interface ReadingDAO<T extends Reading> {
     public Long insert(T reading);
-    public T get(Class<T> templateClass, Long id);
-    public List<T> getAll();
+    public T get(Class<T> clazz, Long id);
+    public List<T> getAll(Class<T> clazz);
     //public List<T> getRange(Long start, Long end);
-    //public List<T> getLatest(Long count);
+    public List<T> getLatest(Class<T> clazz, int count);
     public boolean delete(Class<T> templateClass, Long id);
 }
