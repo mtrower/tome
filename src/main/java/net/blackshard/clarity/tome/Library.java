@@ -9,17 +9,23 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 /**
+ * Library is a static wrapper around the Hibernate lifecycle.  It manages the
+ * SessionFactory, and doles out Sessions.
+ *
  * @author Matthew R. Trower
- * class Library
- * 
- * Provide a static wrapper to manage Hibernate lifecycle
+ * @version 1.0
  */
 public class Library {
     private static final Logger log = LogManager.getLogger(Library.class);
     private static SessionFactory sessionFactory;
 
+    /**
+     * Opens the SessionFactory. This should be done exactly once, during
+     * application initialization.
+     *
+     * @since 1.0
+     */
     public static boolean open() {
-        // We only set up sessionFactory once!
         if (sessionFactory != null) {
             log.warn("failed opening Library: already open");
             return true;
@@ -49,10 +55,21 @@ public class Library {
         return true;
     }
 
+    /**
+     * Opens and returns a session.
+     *
+     * @since 1.0
+     */
     public static Session getBook() {
         return sessionFactory.openSession();
     }
 
+    /**
+     * Closes the SessionFactory.  Should be called exactly once, on application
+     * cleanup.
+     *
+     * @since 1.0
+     */
     public static void close() {
         if ( sessionFactory != null )
             sessionFactory.close();

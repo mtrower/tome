@@ -9,10 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * @author Matthew R. Trower
- * class ReadingDAOHibernate
- * 
  * Hibernate implementation of ReadingDAO
+ *
+ * @author Matthew R. Trower
+ * @version 1.0
  */
 public class ReadingDAOHibernate<T extends Reading> implements ReadingDAO<T> {
     public Long insert(T reading) {
